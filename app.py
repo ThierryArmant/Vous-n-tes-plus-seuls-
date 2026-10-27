@@ -16,6 +16,8 @@ background = base64.b64encode(background_path.read_bytes()).decode("ascii") if b
 st.markdown(f"""<style>
 .stApp {{ background: linear-gradient(rgba(244,238,227,.18), rgba(244,238,227,.18)), url('data:image/jpeg;base64,{background}') center center / cover fixed no-repeat; }}
 [data-testid="stHeader"] {{ background: transparent; }}
+[data-testid="stSidebarCollapsedControl"] button, [data-testid="stExpandSidebarButton"] button {{ background: rgba(244, 220, 190, .92) !important; color: #70472e !important; border: 1px solid rgba(133, 82, 48, .45) !important; border-radius: 10px !important; box-shadow: 0 2px 8px rgba(80, 47, 26, .16); }}
+[data-testid="stSidebarCollapsedControl"] button:hover, [data-testid="stExpandSidebarButton"] button:hover {{ background: #e6bd92 !important; }}
 [data-testid="stMainBlockContainer"] {{ background: rgba(255,252,246,.90); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; padding: 2rem 2.5rem; margin-top: 3rem; margin-bottom: 2rem; box-shadow: 0 12px 40px rgba(62,40,21,.16); }}
 [data-testid="stSidebar"] {{ background: rgba(250,245,236,.97); }}
 [data-testid="stSidebar"][aria-expanded="true"] {{ width: 200px !important; min-width: 200px !important; max-width: 200px !important; }}
