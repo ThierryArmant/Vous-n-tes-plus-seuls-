@@ -90,7 +90,16 @@ def secret_value(name):
 
 with st.sidebar:
     st.header("Moteur de réponse")
-    moteur = st.selectbox("Choisir une IA", ["GPT (OpenAI)", "Albert", "Claude (Anthropic)"])
+    moteur = st.selectbox(
+        "Choisir une IA",
+        ["GPT (OpenAI)", "Albert", "Claude (Anthropic)"],
+        format_func=lambda nom: {
+            "GPT (OpenAI)": "GPT — analyse et questions complexes",
+            "Albert": "Albert — questions administratives",
+            "Claude (Anthropic)": "Claude — lecture et synthèse",
+        }[nom],
+    )
+    st.caption("Usages conseillés : chaque moteur répond à partir des sources disponibles dans le guide.")
     st.caption("L’accès au moteur nécessite le mot de passe de l’application.")
     mot_de_passe = st.text_input("Mot de passe", type="password", key="mot_de_passe_moteur")
     st.header("Votre commune")
