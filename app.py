@@ -142,13 +142,13 @@ if question:
     with st.chat_message("user"):
         st.markdown(question)
     with st.chat_message("assistant"):
-        configured_password = secret_value("GUIDE_PASSWORD")
+        configured_password = secret_value("ADMIN_PASSWORD")
         submitted_password = mot_de_passe or ""
         authenticated = bool(configured_password and submitted_password and hmac.compare_digest(configured_password.encode(), submitted_password.encode()))
         key_name = "ANTHROPIC_API_KEY" if moteur == "Claude (Anthropic)" else "OPENAI_API_KEY"
         key = secret_value(key_name)
         if not configured_password:
-            answer = "Le moteur est prêt mais son accès n’est pas encore configuré. Ajoutez GUIDE_PASSWORD et la clé API dans les secrets Streamlit."
+            answer = "Le moteur est prêt mais son accès n’est pas encore configuré. Ajoutez ADMIN_PASSWORD et la clé API dans les secrets Streamlit."
         elif not authenticated:
             answer = "Saisissez le mot de passe d’accès dans le volet de gauche pour utiliser le moteur."
         elif not key:
