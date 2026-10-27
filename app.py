@@ -84,7 +84,7 @@ def secret_value(name):
 
 with st.sidebar:
     st.header("Moteur de réponse")
-    moteur = st.selectbox("Choisir une IA", ["GPT (OpenAI)", "Claude (Anthropic)"])
+    moteur = st.selectbox("Choisir une IA", ["GPT (OpenAI)", "Albert", "Claude (Anthropic)"])
     st.caption("L’accès au moteur nécessite le mot de passe de l’application.")
     mot_de_passe = st.text_input("Mot de passe", type="password", key="mot_de_passe_moteur")
     st.header("Votre commune")
@@ -145,7 +145,7 @@ if question:
         configured_password = secret_value("ADMIN_PASSWORD")
         submitted_password = mot_de_passe or ""
         authenticated = bool(configured_password and submitted_password and hmac.compare_digest(configured_password.encode(), submitted_password.encode()))
-        key_name = "ANTHROPIC_API_KEY" if moteur == "Claude (Anthropic)" else "OPENAI_API_KEY"
+        key_name = {"Claude (Anthropic)": "ANTHROPIC_API_KEY", "Albert": "ALBERT_API_KEY", "GPT (OpenAI)": "OPENAI_API_KEY"}[moteur]
         key = secret_value(key_name)
         if not configured_password:
             answer = "Le moteur est prêt mais son accès n’est pas encore configuré. Ajoutez ADMIN_PASSWORD et la clé API dans les secrets Streamlit."
@@ -185,6 +185,10 @@ if question:
                         )
                         response.raise_for_status()
                         answer = "\n".join(block.get("text", "") for block in response.json().get("content", []) if block.get("type") == "text").strip() or "Aucune réponse n'a pu être produite."
+                    elif moteur == "Albert":
+                        client = OpenAI(api_key=key, base_url="https://albert.api.etalab.gouv.fr/v1", timeout=60, max_retries=0)
+                        result = client.chat.completions.create(model=secret_value("ALBERT_MODEL") or "openweight-large", messages=[{"role": "system", "content": instruction}] + st.session_state.messages[-12:], max_tokens=4096, temperature=0.2)
+                        answer = result.choices[0].message.content or "Albert n’a pas produit de réponse. Veuillez réessayer."
                     else:
                         client = OpenAI(api_key=key, timeout=45, max_retries=1)
                         model = secret_value("OPENAI_MODEL") or "gpt-6.1-sol"
