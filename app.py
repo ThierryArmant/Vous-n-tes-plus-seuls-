@@ -187,8 +187,13 @@ if question:
                         answer = "\n".join(block.get("text", "") for block in response.json().get("content", []) if block.get("type") == "text").strip() or "Aucune réponse n'a pu être produite."
                     else:
                         client = OpenAI(api_key=key, timeout=45, max_retries=1)
-                        result = client.chat.completions.create(model=secret_value("OPENAI_MODEL") or "gpt-4o-mini", messages=[{"role": "system", "content": instruction}] + st.session_state.messages[-12:], temperature=0.2, max_tokens=1600)
-                        answer = result.choices[0].message.content or "Aucune réponse n'a pu être produite."
+                        model = secret_value("OPENAI_MODEL") or "gpt-6.1-sol"
+                        if model.startswith("gpt-6"):
+                            result = client.responses.create(model=model, instructions=instruction, input=st.session_state.messages[-12:], max_output_tokens=4096, reasoning={"effort": "low"}, store=False)
+                            answer = result.output_text or "La réponse n’a pas pu être produite. Essayez de reformuler la question."
+                        else:
+                            result = client.chat.completions.create(model=model, messages=[{"role": "system", "content": instruction}] + st.session_state.messages[-12:], temperature=0.2, max_tokens=1600)
+                            answer = result.choices[0].message.content or "Aucune réponse n'a pu être produite."
                 except Exception:
                     answer = "Le service d'IA est momentanément indisponible ou mal configuré. Réessayez plus tard ou vérifiez la configuration."
         st.markdown(answer)
