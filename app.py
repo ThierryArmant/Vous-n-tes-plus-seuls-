@@ -18,13 +18,14 @@ st.markdown(f"""<style>
 [data-testid="stHeader"] {{ background: transparent; }}
 [data-testid="stSidebarCollapsedControl"] button, [data-testid="stExpandSidebarButton"] button {{ background: rgba(244, 220, 190, .92) !important; color: #70472e !important; border: 1px solid rgba(133, 82, 48, .45) !important; border-radius: 10px !important; box-shadow: 0 2px 8px rgba(80, 47, 26, .16); }}
 [data-testid="stSidebarCollapsedControl"] button:hover, [data-testid="stExpandSidebarButton"] button:hover {{ background: #e6bd92 !important; }}
-[data-testid="stMainBlockContainer"] {{ background: rgba(255,252,246,.90); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; padding: 2rem 2.5rem; margin-top: 3rem; margin-bottom: 2rem; box-shadow: 0 12px 40px rgba(62,40,21,.16); }}
+[data-testid="stMainBlockContainer"] {{ background: rgba(255,252,246,.90); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; padding: .7rem 1.5rem; margin-top: .7rem; margin-bottom: .7rem; box-shadow: 0 12px 40px rgba(62,40,21,.16); }}
 [data-testid="stSidebar"] {{ background: rgba(250,245,236,.97); }}
 [data-testid="stSidebar"][aria-expanded="true"] {{ width: 200px !important; min-width: 200px !important; max-width: 200px !important; }}
 [data-testid="stSidebar"] [data-testid="stSidebarContent"] {{ padding-left: .8rem; padding-right: .8rem; }}
 [data-testid="stChatMessage"] {{ background: rgba(255,255,255,.9); border: 1px solid rgba(135,94,58,.14); border-radius: 14px; }}
-h1 {{ color: #52392d; font-size: 2rem !important; }} .subtitle {{ color: #765544; font-size: 1.05rem; line-height: 1.5; }}
-@media (max-width: 640px) {{ [data-testid="stMainBlockContainer"] {{ padding: 1.25rem; margin-top: 1rem; border-radius: 14px; }} }}
+h1 {{ color: #52392d; font-size: 1.7rem !important; padding: 0 !important; margin: 0 !important; line-height: 1.15 !important; }} .subtitle {{ color: #765544; font-size: .98rem; line-height: 1.3; margin: 0; }}
+[data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] {{ gap: .35rem; }}
+@media (max-width: 640px) {{ [data-testid="stMainBlockContainer"] {{ padding: .7rem 1rem; margin-top: .5rem; border-radius: 14px; }} }}
 </style>""", unsafe_allow_html=True)
 st.title("⚖️ Vous n'êtes plus seuls")
 st.markdown('<p class="subtitle">À vos côtés pour éclairer vos questions, trouver les bonnes ressources et avancer dans l’exercice de votre mandat.</p>', unsafe_allow_html=True)
