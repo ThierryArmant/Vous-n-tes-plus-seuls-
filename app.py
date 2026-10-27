@@ -30,6 +30,16 @@ st.markdown(f"""<style>
 [data-testid="stSidebar"] p {{ font-size: .83rem; line-height: 1.3; }}
 
 [data-testid="stChatMessage"] {{ background: rgba(255,255,255,.9); border: 1px solid rgba(135,94,58,.14); border-radius: 14px; }}
+@media (min-width: 641px) {{
+  [data-testid="stMainBlockContainer"] {{ max-width: 950px; width: min(950px, calc(100% - 2rem)); margin-left: auto; margin-right: auto; padding: .6rem .85rem; }}
+  [data-testid="stBottomBlockContainer"] {{ max-width: 950px; margin-left: auto; margin-right: auto; }}
+}}
+[data-testid="stChatMessage"] {{ padding: .5rem .65rem; }}
+[data-testid="stChatMessage"] p, [data-testid="stChatMessage"] li {{ font-size: .88rem; line-height: 1.38; }}
+[data-testid="stChatMessage"] h2, [data-testid="stChatMessage"] h3 {{ font-size: 1.05rem; line-height: 1.25; padding: .35rem 0 .15rem; }}
+[data-testid="stChatMessage"] ul, [data-testid="stChatMessage"] ol {{ margin-top: .2rem; margin-bottom: .3rem; }}
+[data-testid="stChatMessage"] [data-testid="stVerticalBlock"] {{ gap: .3rem; }}
+
 h1 {{ color: #52392d; font-size: 1.7rem !important; padding: 0 !important; margin: 0 !important; line-height: 1.35 !important; }} .subtitle {{ color: #765544; font-size: .98rem; line-height: 1.3; margin: 0; }}
 [data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] {{ gap: .6rem; }}
 .notice-version {{ color: #687381; font-size: .875rem; line-height: 1.35; margin: 0; text-align: right; }}
