@@ -25,11 +25,12 @@ st.markdown(f"""<style>
 [data-testid="stChatMessage"] {{ background: rgba(255,255,255,.9); border: 1px solid rgba(135,94,58,.14); border-radius: 14px; }}
 h1 {{ color: #52392d; font-size: 1.7rem !important; padding: 0 !important; margin: 0 !important; line-height: 1.35 !important; }} .subtitle {{ color: #765544; font-size: .98rem; line-height: 1.3; margin: 0; }}
 [data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] {{ gap: .6rem; }}
+.notice-version {{ color: #687381; font-size: .875rem; line-height: 1.35; margin: 0; text-align: right; }}
 @media (max-width: 640px) {{ [data-testid="stMainBlockContainer"] {{ width: calc(100% - 1rem); padding: .7rem 1rem; margin: 3rem .5rem .5rem; border-radius: 14px; }} }}
 </style>""", unsafe_allow_html=True)
 st.title("⚖️ Vous n'êtes plus seuls")
 st.markdown('<p class="subtitle">À vos côtés pour éclairer vos questions, trouver les bonnes ressources et avancer dans l’exercice de votre mandat.</p>', unsafe_allow_html=True)
-st.caption("Version expérimentale : vérifiez les sources et les actes de votre collectivité avant toute décision.")
+st.markdown('<p class="notice-version">Version expérimentale : vérifiez les sources et les actes de votre collectivité avant toute décision.</p>', unsafe_allow_html=True)
 
 SOURCES = [
     ("Conseil municipal — DGCL", "https://www.collectivites-locales.gouv.fr/connaitre-les-acteurs-et-les-institutions/structures-territoriales/les-communes/le-conseil-municipal"),
