@@ -10,7 +10,7 @@ import streamlit as st
 from bs4 import BeautifulSoup
 from openai import OpenAI
 
-st.set_page_config(page_title="Vous n'êtes plus seuls", page_icon="⚖️", layout="centered", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Vous n'êtes plus seuls", page_icon="⚖️", layout="wide", initial_sidebar_state="collapsed")
 background_path = Path(__file__).parent / "ocres.jpg"
 background = base64.b64encode(background_path.read_bytes()).decode("ascii") if background_path.exists() else ""
 st.markdown(f"""<style>
@@ -18,14 +18,14 @@ st.markdown(f"""<style>
 [data-testid="stHeader"] {{ background: transparent; }}
 [data-testid="stSidebarCollapsedControl"] button, [data-testid="stExpandSidebarButton"] button {{ background: rgba(244, 220, 190, .92) !important; color: #70472e !important; border: 1px solid rgba(133, 82, 48, .45) !important; border-radius: 10px !important; box-shadow: 0 2px 8px rgba(80, 47, 26, .16); }}
 [data-testid="stSidebarCollapsedControl"] button:hover, [data-testid="stExpandSidebarButton"] button:hover {{ background: #e6bd92 !important; }}
-[data-testid="stMainBlockContainer"] {{ background: rgba(255,252,246,.90); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; padding: .7rem 1.5rem; margin-top: .7rem; margin-bottom: .7rem; box-shadow: 0 12px 40px rgba(62,40,21,.16); }}
+[data-testid="stMainBlockContainer"] {{ background: rgba(255,252,246,.90); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; max-width: none; width: calc(100% - 2rem); padding: .8rem 1.25rem; margin: 3rem 1rem .7rem; box-shadow: 0 12px 40px rgba(62,40,21,.16); }}
 [data-testid="stSidebar"] {{ background: rgba(250,245,236,.97); }}
 [data-testid="stSidebar"][aria-expanded="true"] {{ width: 200px !important; min-width: 200px !important; max-width: 200px !important; }}
 [data-testid="stSidebar"] [data-testid="stSidebarContent"] {{ padding-left: .8rem; padding-right: .8rem; }}
 [data-testid="stChatMessage"] {{ background: rgba(255,255,255,.9); border: 1px solid rgba(135,94,58,.14); border-radius: 14px; }}
-h1 {{ color: #52392d; font-size: 1.7rem !important; padding: 0 !important; margin: 0 !important; line-height: 1.15 !important; }} .subtitle {{ color: #765544; font-size: .98rem; line-height: 1.3; margin: 0; }}
-[data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] {{ gap: .35rem; }}
-@media (max-width: 640px) {{ [data-testid="stMainBlockContainer"] {{ padding: .7rem 1rem; margin-top: .5rem; border-radius: 14px; }} }}
+h1 {{ color: #52392d; font-size: 1.7rem !important; padding: 0 !important; margin: 0 !important; line-height: 1.35 !important; }} .subtitle {{ color: #765544; font-size: .98rem; line-height: 1.3; margin: 0; }}
+[data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] {{ gap: .6rem; }}
+@media (max-width: 640px) {{ [data-testid="stMainBlockContainer"] {{ width: calc(100% - 1rem); padding: .7rem 1rem; margin: 3rem .5rem .5rem; border-radius: 14px; }} }}
 </style>""", unsafe_allow_html=True)
 st.title("⚖️ Vous n'êtes plus seuls")
 st.markdown('<p class="subtitle">À vos côtés pour éclairer vos questions, trouver les bonnes ressources et avancer dans l’exercice de votre mandat.</p>', unsafe_allow_html=True)
