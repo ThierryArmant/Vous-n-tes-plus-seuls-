@@ -94,12 +94,12 @@ with st.sidebar:
         "Choisir une IA",
         ["GPT (OpenAI)", "Albert", "Claude (Anthropic)"],
         format_func=lambda nom: {
-            "GPT (OpenAI)": "GPT — analyse et questions complexes",
+            "GPT (OpenAI)": "GPT — budgets, comptabilité et droit",
             "Albert": "Albert — questions administratives",
-            "Claude (Anthropic)": "Claude — lecture et synthèse",
+            "Claude (Anthropic)": "Claude — documents, budgets et synthèse",
         }[nom],
     )
-    st.caption("Usages conseillés : chaque moteur répond à partir des sources disponibles dans le guide.")
+    st.caption("Usages conseillés. L’analyse des documents budgétaires sera disponible après leur connexion.")
     st.caption("L’accès au moteur nécessite le mot de passe de l’application.")
     mot_de_passe = st.text_input("Mot de passe", type="password", key="mot_de_passe_moteur")
     st.header("Votre commune")
