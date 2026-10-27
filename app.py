@@ -104,8 +104,9 @@ with st.sidebar:
             st.caption("Population indicative : vérifiez son millésime et la population applicable à chaque règle.")
         st.link_button("Vérifier les données officielles", "https://www.insee.fr/fr/metadonnees/geographie/commune/" + commune["code"])
         with st.expander("Calculer le quorum"):
-            nombre = st.number_input("Conseillers en exercice", min_value=1, max_value=200, value=23, step=1, key="effectif_quorum")
-            st.write(f"Majorité des membres en exercice : {nombre // 2 + 1} présents.")
+            nombre = st.number_input("Conseillers en exercice", min_value=1, max_value=200, value=None, step=1, placeholder="Saisissez l’effectif", key="effectif_quorum")
+            if nombre is not None:
+                st.write(f"Majorité des membres en exercice : {nombre // 2 + 1} présents.")
             st.caption("Pour une séance ordinaire : cas particuliers et nouvelle convocation à vérifier.")
             st.link_button("Article L. 2121-17 du CGCT", "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006389875")
     st.header("Sources officielles")
