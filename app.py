@@ -67,7 +67,47 @@ def research(question):
                 hits.append((score, title, url, p[:1500]))
     return sorted(hits, key=lambda x: x[0], reverse=True)[:7]
 
+@st.cache_data(ttl=86400, show_spinner=False)
+def chercher_communes(terme):
+    params = {"fields": "nom,code,codesPostaux,codeDepartement,population", "limit": 30}
+    params["codePostal" if terme.isdigit() and len(terme) == 5 else "nom"] = terme
+    response = requests.get("https://geo.api.gouv.fr/communes", params=params, timeout=8)
+    response.raise_for_status()
+    return [c for c in response.json() if c.get("code") and c.get("nom")][:30]
+
 with st.sidebar:
+    st.header("Votre commune")
+    with st.form("recherche_commune"):
+        terme = st.text_input("Nom ou code postal", placeholder="Gargas ou 84400")
+        lancer = st.form_submit_button("Rechercher")
+    if lancer:
+        if len(terme.strip()) < 2:
+            st.warning("Indiquez au moins deux caractères.")
+        else:
+            try:
+                st.session_state["communes_trouvees"] = chercher_communes(terme.strip())
+                st.session_state.pop("commune_choisie", None)
+                if not st.session_state["communes_trouvees"]:
+                    st.info("Aucune commune trouvée.")
+            except (requests.RequestException, ValueError):
+                st.error("Recherche momentanément indisponible. Réessayez plus tard.")
+    communes = st.session_state.get("communes_trouvees", [])
+    if communes:
+        labels = {f'{c["nom"]} ({c.get("codeDepartement", "")}) — {c["code"]}': c for c in communes}
+        choix = st.selectbox("Sélectionnez votre commune", list(labels), key="choix_commune")
+        commune = labels[choix]
+        st.session_state["commune_choisie"] = commune
+        st.caption(f'Code INSEE : {commune["code"]}')
+        population = commune.get("population")
+        if population is not None:
+            st.write(f'Population indiquée par l’API : {population:,} habitants'.replace(",", " "))
+            st.caption("Population indicative : vérifiez son millésime et la population applicable à chaque règle.")
+        st.link_button("Vérifier les données officielles", "https://www.insee.fr/fr/metadonnees/geographie/commune/" + commune["code"])
+        with st.expander("Calculer le quorum"):
+            nombre = st.number_input("Conseillers en exercice", min_value=1, max_value=200, value=23, step=1, key="effectif_quorum")
+            st.write(f"Majorité des membres en exercice : {nombre // 2 + 1} présents.")
+            st.caption("Pour une séance ordinaire : cas particuliers et nouvelle convocation à vérifier.")
+            st.link_button("Article L. 2121-17 du CGCT", "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006389875")
     st.header("Sources officielles")
     st.write("La recherche explore un premier ensemble de pages institutionnelles. Sa couverture reste limitée.")
     st.link_button("Guide du maire 2026", "https://www.collectivites-locales.gouv.fr/connaitre-les-acteurs-et-les-institutions/democratie-locale/les-elections-municipales/le-guide-du-maire-2026")
@@ -107,7 +147,11 @@ if question:
             else:
                 today = datetime.now(ZoneInfo("Europe/Paris")).strftime("%d/%m/%Y")
                 evidence = "\n\n".join(f"[{i}] {title} — {url}\n{p}" for i, (_, title, url, p) in enumerate(hits, 1))
-                instruction = ("Tu aides les élus locaux en droit public français. Réponds clairement en français, avec prudence. "
+                commune_contexte = st.session_state.get("commune_choisie", {})
+                commune_nom = commune_contexte.get("nom", "non renseignée")
+                commune_code = commune_contexte.get("code", "non renseigné")
+                instruction = (f"Commune choisie : {commune_nom}, code INSEE {commune_code}. Ne présume pas des compétences ni des actes locaux. "
+                    "Tu aides les élus locaux en droit public français. Réponds clairement en français, avec prudence. "
                     "Utilise exclusivement les extraits ci-dessous comme fondement factuel juridique ; ils peuvent être incomplets ou anciens. "
                     "Ne prétends pas avoir vérifié un article ou une version si ce n'est pas dans les extraits. "
                     "N'invente ni article, ni arrêt, ni lien. Cite les sources réellement utilisées avec leur lien exact. "
