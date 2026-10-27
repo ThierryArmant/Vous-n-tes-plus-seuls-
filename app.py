@@ -23,11 +23,11 @@ st.markdown(f"""<style>
 [data-testid="stSidebar"][aria-expanded="true"] {{ width: 200px !important; min-width: 200px !important; max-width: 200px !important; }}
 [data-testid="stSidebar"] [data-testid="stSidebarContent"] {{ padding-left: .8rem; padding-right: .8rem; }}
 [data-testid="stChatMessage"] {{ background: rgba(255,255,255,.9); border: 1px solid rgba(135,94,58,.14); border-radius: 14px; }}
-h1 {{ color: #52392d; }} .subtitle {{ color: #765544; font-size: 1.1rem; }}
+h1 {{ color: #52392d; font-size: 2rem !important; }} .subtitle {{ color: #765544; font-size: 1.05rem; line-height: 1.5; }}
 @media (max-width: 640px) {{ [data-testid="stMainBlockContainer"] {{ padding: 1.25rem; margin-top: 1rem; border-radius: 14px; }} }}
 </style>""", unsafe_allow_html=True)
 st.title("⚖️ Vous n'êtes plus seuls")
-st.markdown('<p class="subtitle">Un assistant de droit public pour les élus locaux</p>', unsafe_allow_html=True)
+st.markdown('<p class="subtitle">À vos côtés pour éclairer vos questions, trouver les bonnes ressources et avancer dans l’exercice de votre mandat.</p>', unsafe_allow_html=True)
 st.caption("Version expérimentale : vérifiez les sources et les actes de votre collectivité avant toute décision.")
 
 SOURCES = [
