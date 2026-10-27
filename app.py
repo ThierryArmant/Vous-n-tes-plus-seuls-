@@ -10,7 +10,7 @@ import streamlit as st
 from bs4 import BeautifulSoup
 from openai import OpenAI
 
-st.set_page_config(page_title="Vous n'êtes plus seuls", page_icon="⚖️", layout="centered")
+st.set_page_config(page_title="Vous n'êtes plus seuls", page_icon="⚖️", layout="centered", initial_sidebar_state="collapsed")
 background_path = Path(__file__).parent / "ocres.jpg"
 background = base64.b64encode(background_path.read_bytes()).decode("ascii") if background_path.exists() else ""
 st.markdown(f"""<style>
@@ -18,7 +18,7 @@ st.markdown(f"""<style>
 [data-testid="stHeader"] {{ background: transparent; }}
 [data-testid="stMainBlockContainer"] {{ background: rgba(255,252,246,.90); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; padding: 2rem 2.5rem; margin-top: 3rem; margin-bottom: 2rem; box-shadow: 0 12px 40px rgba(62,40,21,.16); }}
 [data-testid="stSidebar"] {{ background: rgba(250,245,236,.97); }}
-[data-testid="stSidebar"][aria-expanded="true"] {{ width: 235px !important; min-width: 235px !important; max-width: 235px !important; }}
+[data-testid="stSidebar"][aria-expanded="true"] {{ width: 200px !important; min-width: 200px !important; max-width: 200px !important; }}
 [data-testid="stSidebar"] [data-testid="stSidebarContent"] {{ padding-left: .8rem; padding-right: .8rem; }}
 [data-testid="stChatMessage"] {{ background: rgba(255,255,255,.9); border: 1px solid rgba(135,94,58,.14); border-radius: 14px; }}
 h1 {{ color: #52392d; }} .subtitle {{ color: #765544; font-size: 1.1rem; }}
