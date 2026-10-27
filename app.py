@@ -1,4 +1,6 @@
 import os
+import base64
+from pathlib import Path
 import re
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -9,7 +11,17 @@ from bs4 import BeautifulSoup
 from openai import OpenAI
 
 st.set_page_config(page_title="Vous n'êtes plus seuls", page_icon="⚖️", layout="centered")
-st.markdown('''<style>.stApp {background: linear-gradient(145deg,#eef4f5,#f7f7f0)} h1 {color:#174755} .subtitle {color:#385c64;font-size:1.1rem} </style>''', unsafe_allow_html=True)
+background_path = Path(__file__).parent / "ocres.jpg"
+background = base64.b64encode(background_path.read_bytes()).decode("ascii") if background_path.exists() else ""
+st.markdown(f"""<style>
+.stApp {{ background: linear-gradient(rgba(244,238,227,.18), rgba(244,238,227,.18)), url('data:image/jpeg;base64,{background}') center center / cover fixed no-repeat; }}
+[data-testid="stHeader"] {{ background: transparent; }}
+[data-testid="stMainBlockContainer"] {{ background: rgba(255,252,246,.90); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; padding: 2rem 2.5rem; margin-top: 3rem; margin-bottom: 2rem; box-shadow: 0 12px 40px rgba(62,40,21,.16); }}
+[data-testid="stSidebar"] {{ background: rgba(250,245,236,.97); }}
+[data-testid="stChatMessage"] {{ background: rgba(255,255,255,.9); border: 1px solid rgba(135,94,58,.14); border-radius: 14px; }}
+h1 {{ color: #52392d; }} .subtitle {{ color: #765544; font-size: 1.1rem; }}
+@media (max-width: 640px) {{ [data-testid="stMainBlockContainer"] {{ padding: 1.25rem; margin-top: 1rem; border-radius: 14px; }} }}
+</style>""", unsafe_allow_html=True)
 st.title("⚖️ Vous n'êtes plus seuls")
 st.markdown('<p class="subtitle">Un assistant de droit public pour les élus locaux</p>', unsafe_allow_html=True)
 st.caption("Version expérimentale : vérifiez les sources et les actes de votre collectivité avant toute décision.")
